@@ -14,13 +14,9 @@ venv/
 env/
 ENV/
 
-# Jupyter
-.ipynb_checkpoints/
-*.ipynb
 
 # Output artefacts
 *.png
-*.csv
 *.parquet
 *.h5
 *.pkl
