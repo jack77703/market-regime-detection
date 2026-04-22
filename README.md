@@ -9,7 +9,8 @@ A four-phase ML project that detects Bull, Sideways, and Bear market regimes in 
 
 ```
 market_regime_project/
-├── Phase1_Data_Engineering_Baseline.ipynb          # Phase 1: data pipeline & feature engineering
+├── Phase1_Data_Engineering_Baseline.ipynb
+├── Phase 2 Spectral Clustering/K-means and spectral comparison
 ├── Phase 3 HMM/
 │   ├── Notebooks/
 │   │   ├── Phase3_HMM _code.ipynb                  # Phase 3: original HMM pipeline
