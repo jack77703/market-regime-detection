@@ -39,7 +39,7 @@ market_regime_project/
 - Engineers two core features: **21-day rolling log return** and **21-day rolling volatility**
 - Establishes baseline regime statistics
 
-## Phase 2 Spectral Clustering
+## Phase 2 — Spectral Clustering
 
 ## File Structure
 
@@ -94,6 +94,31 @@ Applies both functions to the complete 26-year dataset and produces the followin
 - Saves the enriched DataFrame as `sp500_master_with_both_K-means_Spectral_clusters.csv`
 - This file contains all original columns plus: `Spectral_Raw`, `Spectral_Synced`, `Spectral_Regime`, `KMeans_Synced`, `KMeans_Regime`
 - Includes a rolling-window loop template showing Member 3 exactly how to call both functions inside their HMM iteration
+
+## How to Run 
+
+### Option 1 — Google Colab (Recommended)
+
+1. Open [Google Colab](https://colab.research.google.com)
+2. Upload `Member2_Spectral_Clustering.ipynb` via **File → Upload Notebook**
+3. Upload `sp500_master_dataset (1).csv` using the Colab file upload cell already present in **Step 1** of the notebook
+4. Run all cells in order via **Runtime → Run All**
+5. The output CSV (`sp500_master_with_both_K-means_Spectral_clusters.csv`) will be saved in the Colab working directory — download it for Member 3
+
+> **Note:** Spectral Clustering on ~6,500 days takes approximately 30–90 seconds. This is expected behaviour due to the eigendecomposition step.
+
+### Option 2 — Local Jupyter Notebook
+
+1. Clone or download this repository
+2. Place `sp500_master_dataset (1).csv` in the same folder as the notebook
+3. Launch Jupyter:
+   ```bash
+   jupyter notebook Member2_Spectral_Clustering.ipynb
+   ```
+4. Comment out the `files.upload()` line in **Step 1** (that line is Colab-specific) and ensure `CSV_PATH` points to the correct local filename
+5. Run all cells in order
+
+---
 
 ### Phase 3 — HMM Rolling Prediction
 A two-stage pipeline applied in a **walk-forward rolling window** (no look-ahead bias):
