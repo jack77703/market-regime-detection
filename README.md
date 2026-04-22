@@ -39,6 +39,54 @@ market_regime_project/
 - Engineers two core features: **21-day rolling log return** and **21-day rolling volatility**
 - Establishes baseline regime statistics
 
+## Notebook Structure
+
+The notebook is divided into three parts:
+
+### Part 1 — Helper Functions
+
+Defines two reusable functions that are also shared with Member 3's HMM pipeline.
+
+**`run_spectral_clustering(X_scaled)`**
+- Fits `sklearn.cluster.SpectralClustering` on a scaled 2D feature matrix
+- Uses `affinity='nearest_neighbors'` with `n_neighbors=35`
+- Returns raw integer labels (0, 1, or 2) — not yet economically meaningful
+- Must always be followed by `align_regime_labels()`
+
+**`align_regime_labels(df_slice, raw_label_col)`**
+- Resolves the label-flipping problem that occurs in all unsupervised methods
+- Uses a return-rank rule: lowest return → Bear (2), middle → Sideways (0), highest → Bull (1)
+- Guarantees a stable output convention on every run and every rolling window
+
+**Output label convention (guaranteed):**
+
+| Value | Regime |
+|-------|--------|
+| `0` | Sideways / Correction |
+| `1` | Bull Market (Low Volatility, Positive Returns) |
+| `2` | Bear Market (High Volatility) |
+
+### Part 2 — Full-Sample Analysis (2000–2026)
+
+Applies both functions to the complete 26-year dataset and produces the following outputs:
+
+- **Step 1** — Loads the Master Dataset CSV from Member 1
+- **Step 2** — Extracts the scaled feature matrix (`Rolling_Return_21_scaled`, `Rolling_Volatility_21_scaled`)
+- **Step 3** — Fits Spectral Clustering on all ~6,500 trading days
+- **Step 4** — Aligns labels for both Track B (Spectral) and Track A (K-Means) to the same convention
+- **Step 5** — Per-regime statistics table (mean return, std return, mean volatility, std volatility, count)
+- **Step 6** — Four visualisations:
+  - Side-by-side feature space: K-Means vs Spectral Clustering
+  - Spectral Clustering standalone feature space
+  - S&P 500 time series coloured by Spectral regime
+  - S&P 500 time series coloured by K-Means regime
+
+### Part 3 — Export for Member 3
+
+- Saves the enriched DataFrame as `sp500_master_with_both_K-means_Spectral_clusters.csv`
+- This file contains all original columns plus: `Spectral_Raw`, `Spectral_Synced`, `Spectral_Regime`, `KMeans_Synced`, `KMeans_Regime`
+- Includes a rolling-window loop template showing Member 3 exactly how to call both functions inside their HMM iteration
+
 ### Phase 3 — HMM Rolling Prediction
 A two-stage pipeline applied in a **walk-forward rolling window** (no look-ahead bias):
 
