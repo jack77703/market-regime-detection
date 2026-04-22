@@ -20,8 +20,6 @@ This notebook is **Track B** in the group's A/B comparison pipeline.
 | Member 3 | Both | Hidden Markov Model + rolling-window out-of-sample loop |
 | Member 4 | Both | Backtesting, Sharpe Ratio comparison, final verdict |
 
-The same Master Dataset flows through all four members, ensuring a fair one-to-one A/B comparison.
-
 ---
 
 ## File Structure
@@ -44,16 +42,11 @@ pandas
 matplotlib
 scikit-learn
 ```
-
-Install all dependencies with:
-
-```bash
-pip install numpy pandas matplotlib scikit-learn
 ```
 
 ---
 
-## How to Run
+## How to Run 
 
 ### Option 1 — Google Colab (Recommended)
 
@@ -130,41 +123,6 @@ Applies both functions to the complete 26-year dataset and produces the followin
 - This file contains all original columns plus: `Spectral_Raw`, `Spectral_Synced`, `Spectral_Regime`, `KMeans_Synced`, `KMeans_Regime`
 - Includes a rolling-window loop template showing Member 3 exactly how to call both functions inside their HMM iteration
 
----
-
-## Input File
-
-| File | Source | Description |
-|------|--------|-------------|
-| `sp500_master_dataset (1).csv` | Member 1 | Daily S&P 500 OHLCV data (2000–2026) with engineered features and K-Means labels |
-
-**Required columns in the input file:**
-
-- `Date` — index column (datetime)
-- `Close` or `Adj Close` — S&P 500 closing price
-- `Rolling_Return_21` — 21-day rolling mean log return (raw)
-- `Rolling_Volatility_21` — 21-day rolling standard deviation of log return (raw)
-- `Rolling_Return_21_scaled` — StandardScaler-normalised version
-- `Rolling_Volatility_21_scaled` — StandardScaler-normalised version
-- `KMeans_Label` — raw K-Means cluster labels from Member 1 (optional but needed for A/B comparison plots)
-
----
-
-## Output File
-
-| File | Destination | Description |
-|------|-------------|-------------|
-| `sp500_master_with_both_K-means_Spectral_clusters.csv` | Member 3 | All original columns + new cluster label columns |
-
-**New columns added by this notebook:**
-
-| Column | Description |
-|--------|-------------|
-| `Spectral_Raw` | Raw integer labels from SpectralClustering (arbitrary, pre-alignment) |
-| `Spectral_Synced` | Aligned labels: 0=Sideways, 1=Bull, 2=Bear |
-| `Spectral_Regime` | Human-readable regime name string |
-| `KMeans_Synced` | Aligned K-Means labels using the same convention |
-| `KMeans_Regime` | Human-readable K-Means regime name string |
 
 ---
 
@@ -177,28 +135,4 @@ Applies both functions to the complete 26-year dataset and produces the followin
 
 ---
 
-## For Member 3 — Quick Reference
 
-```python
-# Step 1: Get raw spectral labels for a training window
-df_train['Spectral_Raw'] = run_spectral_clustering(X_train)
-
-# Step 2: Align to stable convention (0=Sideways, 1=Bull, 2=Bear)
-df_train['Spectral_Synced'] = align_regime_labels(
-    df_slice      = df_train,
-    raw_label_col = 'Spectral_Raw',
-    ret_col       = 'Rolling_Return_21'
-)
-
-# Step 3: Feed into HMM as observation sequence
-obs_sequence = df_train['Spectral_Synced'].values
-```
-
-The same `align_regime_labels()` function works identically on K-Means labels (`KMeans_Label`) — ensuring both Track A and Track B use the same label convention for a valid HMM comparison.
-
----
-
-## Authors
-
-**Member 2** — Advanced Spatial Clustering (Track B)
-MS Financial Engineering — Advanced Market Regime Detection Project
