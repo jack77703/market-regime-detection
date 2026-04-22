@@ -41,6 +41,14 @@ market_regime_project/
 
 ## Phase 2 Spectral Clustering
 
+## File Structure
+
+```
+├── Member2_Spectral_Clustering.ipynb           # Main notebook (this file)
+├── sp500_master_dataset .csv                # Input — produced by Member 1
+└── sp500_master_with_both_K-means_Spectral_clusters.csv   # Output — passed to Member 3
+```
+
 The notebook is divided into three parts:
 
 ### Part 1 — Helper Functions
