@@ -26,7 +26,7 @@ This notebook is **Track B** in the group's A/B comparison pipeline.
 
 ```
 ├── Member2_Spectral_Clustering.ipynb           # Main notebook (this file)
-├── sp500_master_dataset (1).csv                # Input — produced by Member 1
+├── sp500_master_dataset .csv                # Input — produced by Member 1
 └── sp500_master_with_both_K-means_Spectral_clusters.csv   # Output — passed to Member 3
 ```
 
