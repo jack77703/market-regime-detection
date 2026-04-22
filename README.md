@@ -39,7 +39,7 @@ market_regime_project/
 - Engineers two core features: **21-day rolling log return** and **21-day rolling volatility**
 - Establishes baseline regime statistics
 
-## Notebook Structure
+## Phase 2 Spectral Clustering
 
 The notebook is divided into three parts:
 
