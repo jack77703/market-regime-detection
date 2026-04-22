@@ -41,6 +41,16 @@ market_regime_project/
 
 ## Phase 2 — Spectral Clustering
 
+---
+
+## Overview
+
+The goal is to identify Bull, Bear, and Sideways market regimes in S&P 500 daily data using Spectral Clustering — a network-based unsupervised learning method that outperforms the K-Means baseline (Track A) by capturing the complex, non-spherical geometry of financial market data.
+
+This notebook is **Track B** in the group's A/B comparison pipeline.
+
+---
+
 ## File Structure
 
 ```
